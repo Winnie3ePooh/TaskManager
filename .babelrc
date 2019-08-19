@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    ["react-hot-loader/babel"],
+    ["transform-react-jsx"],
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "./src",
+        "rootPathPrefix": "~/"
+      }
+    ]
+  ]
+}

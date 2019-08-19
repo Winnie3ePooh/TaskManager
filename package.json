@@ -1,0 +1,38 @@
+{
+  "name": "taskmanager",
+  "version": "0.0.1",
+  "description": "task manager",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build entry.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Winnie3ePooh/TaskManager.git"
+  },
+  "author": "Maksim Stepanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Winnie3ePooh/TaskManager/issues"
+  },
+  "homepage": "https://github.com/Winnie3ePooh/TaskManager#readme",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "@hot-loader/react-dom": "^16.9.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-root-import": "^6.4.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "parcel-bundler": "^1.12.3",
+    "react-hot-loader": "^4.12.11"
+  },
+  "alias": {
+    "react-dom": "@hot-loader/react-dom"
+  }
+}
