@@ -1,10 +1,13 @@
-import {hot} from 'react-hot-loader';
 import React from 'react';
+import {hot} from 'react-hot-loader';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 // import routes from '../../routesroutes/routes';
 import styled from 'styled-components';
 
+import ProjectsPage from '~/pages/ProjectsPage/ProjectsPage'
+
 import Loading from '~/components/Loading/Loading';
+import NavBar from '~/components/NavBar/NavBar';
 
 import {MainContainer} from '~/components/Containers/MainContainer';
 
@@ -35,8 +38,8 @@ class MainPage extends React.Component {
           isLoading
           ? <Loading />
           : <MainContainer>
-              <div>Foo</div>
-              <NotMainPage></NotMainPage>
+              <NavBar></NavBar>
+              <ProjectsPage></ProjectsPage>
             </MainContainer>
         }
       </React.Fragment>
