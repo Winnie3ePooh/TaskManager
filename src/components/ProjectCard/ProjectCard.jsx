@@ -33,6 +33,7 @@ const ProjectCardContainer = styled(RowContainer)`
   background: #EAE7DC;
   margin: 0;
   margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 `;
 
 const HeaderContainer = styled.h2`

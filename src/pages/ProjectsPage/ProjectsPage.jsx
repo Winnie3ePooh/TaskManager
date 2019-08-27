@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import db from '~/db/db';
 import Loading from '~/components/Loading/Loading';
 import ProjectsRow from '~/components/ProjectsRow/ProjectsRow';
 
@@ -15,38 +16,11 @@ class ProjectsPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      projects: [
-        {
-          id: 0,
-          title: 'My first project',
-          tasks: [],
-          owner: 'me',
-          idCompleted: false,
-        },
-        {
-          id: 1,
-          title: 'My first project',
-          tasks: [],
-          owner: 'me',
-          idCompleted: false,
-        },
-        {
-          id: 2,
-          title: 'My first project',
-          tasks: [],
-          owner: 'me',
-          idCompleted: false,
-        },
-        {
-          id: 3,
-          title: 'My first project',
-          tasks: [],
-          owner: 'me',
-          idCompleted: false,
-        },
-      ]
-    });
+    db.table('projects').toArray().then(projects => {
+      this.setState({
+        projects
+      })
+    })
   }
 
   render() {
