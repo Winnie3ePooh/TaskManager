@@ -1,19 +1,12 @@
 import React from 'react';
 import {hot} from 'react-hot-loader';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-// import routes from '../../routesroutes/routes';
-import styled from 'styled-components';
-
-import ProjectsPage from '~/pages/ProjectsPage/ProjectsPage'
+import routes from '~/routes/routes';
 
 import Loading from '~/components/Loading/Loading';
 import NavBar from '~/components/NavBar/NavBar';
 
 import {MainContainer} from '~/components/Containers/MainContainer';
-
-const NotMainPage = () => {
-  return <div>Bar</div>
-}
 
 class MainPage extends React.Component {
   constructor() {
@@ -38,8 +31,17 @@ class MainPage extends React.Component {
           isLoading
           ? <Loading />
           : <MainContainer>
-              <NavBar></NavBar>
-              <ProjectsPage></ProjectsPage>
+              <Router>
+                <NavBar></NavBar>
+                {routes.map((route, index) => (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.main}
+                  />
+                ))}
+              </Router>
             </MainContainer>
         }
       </React.Fragment>

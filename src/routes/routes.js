@@ -1,6 +1,6 @@
 import React from "react";
-import StreamsPage from "scenes/StreamsPage";
-import FollowedStreamsPage from "scenes/FollowedStreamsPage";
+import ProjectsPage from '~/pages/ProjectsPage/ProjectsPage';
+import NewProjectsForm from '~/components/NewProjectsForm/NewProjectsForm'
 
 const routes = [
   { 
@@ -8,26 +8,14 @@ const routes = [
     text: "Main",
     path: "/",
     exact: true,
-    main: () => <StreamsPage />
+    main: () => <ProjectsPage></ProjectsPage>
   },
-  {
+  { 
     id: 1,
-    text: "Subscriptions",
-    path: "/subscriptions",
-    main: () => <FollowedStreamsPage />
+    text: "Add new project",
+    path: "/project/new",
+    main: () => <NewProjectsForm></NewProjectsForm>
   },
-  { 
-    id: 2,
-    text: "Follows",
-    path: "/follows",
-    main: () => <h1>Follows</h1>
-  },
-  { 
-    id: 3,
-    text: "third",
-    path: "/404",
-    main: () => <h1>third</h1>
-  }
 ];
 
 export default routes;

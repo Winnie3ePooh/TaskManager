@@ -38,5 +38,10 @@ export default ProjectsPage;
 const ProjectsPageContainer = styled(MainContainer)`
   background: #8E8D8A;
   width: 90%;
+  height: calc(100% - 75px);
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  flex-direction: column;
   margin: 0 auto;
 `

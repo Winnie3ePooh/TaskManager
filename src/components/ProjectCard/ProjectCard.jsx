@@ -26,14 +26,17 @@ class ProjectCard extends React.Component {
 export default ProjectCard;
 
 const ProjectCardContainer = styled(RowContainer)`
-  width: 32%;
+  width: 33%;
   height: 250px;
   box-sizing: content-box;
   border-radius: 15px;
   background: #EAE7DC;
-  margin: 0;
-  margin-bottom: 15px;
+  margin: 0 0.5% 15px 0;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
 `;
 
 const HeaderContainer = styled.h2`
