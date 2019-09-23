@@ -5,7 +5,7 @@ import { RowContainer } from '~/components/Containers/RowContainer';
 import ProjectCard from '~/components/ProjectCard/ProjectCard';
 import NewProjectsForm from '~/components/NewProjectsForm/NewProjectsForm';
 
-import logo from '~/assets/add.svg';
+import AddLogo from '~/assets/add.svg';
 
 function ProjectCards ({ projects }) {
   return projects.map((item) =>
@@ -49,19 +49,7 @@ class ProjectsRow extends React.Component {
         <ProjectsRowContainer>
             <ProjectCards projects={projects} />
             <NewProjectButton onClick={this.openModal}>
-              <img src={logo} alt='Add'/>
-            </NewProjectButton>
-            <NewProjectButton onClick={this.openModal}>
-              <img src={logo} alt='Add'/>
-            </NewProjectButton>
-            <NewProjectButton onClick={this.openModal}>
-              <img src={logo} alt='Add'/>
-            </NewProjectButton>
-            <NewProjectButton onClick={this.openModal}>
-              <img src={logo} alt='Add'/>
-            </NewProjectButton>
-            <NewProjectButton onClick={this.openModal}>
-              <img src={logo} alt='Add'/>
+              <img src={AddLogo} alt='Add'/>
             </NewProjectButton>
         </ProjectsRowContainer>
         <NewProjectsForm isVisible={this.state.isModalOpen} closeModal={this.closeModal}></NewProjectsForm>
