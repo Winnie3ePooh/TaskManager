@@ -7,8 +7,11 @@ import NewProjectsForm from '~/components/NewProjectsForm/NewProjectsForm';
 
 import AddLogo from '~/assets/add.svg';
 
-function ProjectCards ({ projects }) {
-  return projects.map((item) =>
+import db from '~/db/db';
+import { addProject } from '~/db/projects';
+
+function ProjectCards ({ projectsList }) {
+  return projectsList.map((item) =>
       <ProjectCard key={item.id} project={item} />
   );
 }
@@ -23,36 +26,51 @@ class ProjectsRow extends React.Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleAddNewProject = this.handleAddNewProject.bind(this);
   }
 
-  componentDidMount() {
-    
+  async componentDidMount() {
+    const userProjects = await db.table('projects').toArray();
+    this.setState({
+      projectsList: userProjects,
+    });
   }
 
   openModal(e) {
     this.setState({
       isModalOpen: true,
     });
-    console.log(e);
   }
 
-  closeModal(e) {
+  closeModal() {
     this.setState({
       isModalOpen: false,
     })
   }
+  
+  async handleAddNewProject(data) {
+    const id = await addProject(data);
+    const newProjectsList = [...this.state.projectsList, Object.assign({}, data, { id })];
+    this.setState({
+      projectsList: newProjectsList,
+    })
+    this.closeModal();
+  }
 
   render() {
-    const projects = this.props.projects;
+    const projectsList = this.state.projectsList;
     return (
       <React.Fragment>
         <ProjectsRowContainer>
-            <ProjectCards projects={projects} />
+            {projectsList && <ProjectCards projectsList={projectsList} />}
             <NewProjectButton onClick={this.openModal}>
               <img src={AddLogo} alt='Add'/>
             </NewProjectButton>
         </ProjectsRowContainer>
-        <NewProjectsForm isVisible={this.state.isModalOpen} closeModal={this.closeModal}></NewProjectsForm>
+        <NewProjectsForm
+          isVisible={this.state.isModalOpen}
+          closeModal={this.closeModal}
+          handleAddNewProject={this.handleAddNewProject} />
       </React.Fragment>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
 
+import DatePicker from "react-datepicker";
 import { RowContainer } from '~/components/Containers/RowContainer';
 
 import CloseLogo from '~/assets/close.svg';
@@ -8,15 +9,30 @@ import CloseLogo from '~/assets/close.svg';
 class NewProjectsForm extends React.Component {
   constructor(props) {
     super(props);
-    this.addNewProject = this.addNewProject.bind(this);
-    console.log(props);
+
+    this.state = {
+      startDate: new Date(),
+    };
+
+    this.inputForm = React.createRef(); 
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
   }
 
-  addNewProject(e) {
-    console.log(e);
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const newProject = {
+      title: this.inputForm.current[0].value,
+      description: this.inputForm.current[1].value,
+      dateStart: this.inputForm.current[2].value,
+      dateEnd: this.inputForm.current[3].value,
+      isDone: false,
+    }
+
+    this.props.handleAddNewProject(newProject);
   }
 
   render() {
@@ -28,7 +44,7 @@ class NewProjectsForm extends React.Component {
           <ButtonClose onClick={this.props.closeModal}>
             <img src={CloseLogo} alt='Close'/>
           </ButtonClose>
-          <FormContainer>
+          <FormContainer ref={this.inputForm} onSubmit={this.handleSubmit}>
             <InputRow>
               <label htmlFor='pName'>Project name</label>
               <input id='pName' type='text'></input>
@@ -37,9 +53,19 @@ class NewProjectsForm extends React.Component {
               <label htmlFor='pDescr'>Project description</label>
               <textarea id='pDescr' cols="40" rows="10"></textarea>
             </InputRow>
-            <InputRow>
-              <label htmlFor='pDescr'>Project description</label>
-              <input id='pDescr'></input>
+            <InputRow type='inline'>
+              <label htmlFor='pDescr'>Start date</label>
+              <StyledDatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+              />
+            </InputRow>
+            <InputRow type='inline'>
+              <label htmlFor='pDescr'>End date</label>
+              <StyledDatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+              />
             </InputRow>
             <SubmitButton type='submit'>Add</SubmitButton>
           </FormContainer>
@@ -100,10 +126,13 @@ const FormContainer = styled.form`
   flex-wrap: wrap;
   flex-shrink: 0;
   margin: 100px 24px;
+  padding: 15px 7.5px;
+  border: 1px solid #7d5f36;
+  border-radius: 10px;
 `;
 
 const InputRow = styled.div`
-  width: 100%;
+  width: ${props => props.type === 'inline' ? '50%' : '100%'};
 
   & > label,
   & > input {
@@ -153,5 +182,15 @@ const SubmitButton = styled.button`
     background: #7d5f36;
     color: #D8C3A5;
     border-color: #D8C3A5;
+    cursor: pointer;
   }
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  height: 30px;
+  box-sizing: border-box;
+  border: 2px solid #D8C3A5;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding-left: 5px;
 `;

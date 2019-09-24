@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {RowContainer} from '~/components/Containers/RowContainer';
+import EditLogo from '~/assets/edit.svg';
 
 class ProjectCard extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class ProjectCard extends React.Component {
         <HeaderContainer>
           {project.title}
         </HeaderContainer>
+        <img src={EditLogo} alt='Edit' />
       </ProjectCardContainer>
     );
   }
@@ -28,6 +30,7 @@ export default ProjectCard;
 const ProjectCardContainer = styled(RowContainer)`
   width: 33%;
   height: 250px;
+  position: relative;
   box-sizing: content-box;
   border-radius: 15px;
   background: #EAE7DC;
@@ -36,6 +39,27 @@ const ProjectCardContainer = styled(RowContainer)`
   
   &:nth-child(3n) {
     margin-right: 0;
+  }
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &:hover{
+    cursor: pointer;
+
+    img {
+      display: block;
+      background: #d9d3bf;
+      opacity: 0.5;
+      margin: auto;
+    }
   }
 `;
 

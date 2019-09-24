@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
+
 import './index.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import * as serviceWorker from './serviceWorker';
 
 import MainPage from './pages/MainPage/MainPage';
