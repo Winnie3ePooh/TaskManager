@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {RowContainer} from '~/components/Containers/RowContainer';
-import EditLogo from '~/assets/edit.svg';
 
 class ProjectCard extends React.Component {
   constructor(props) {
@@ -16,10 +15,14 @@ class ProjectCard extends React.Component {
     const project = this.props.project;
     return (
       <ProjectCardContainer>
-        <HeaderContainer>
-          {project.title}
-        </HeaderContainer>
-        <img src={EditLogo} alt='Edit' />
+        <CardHeaderContainer>{project.title}</CardHeaderContainer>
+        <CardContentContainer>{project.description}</CardContentContainer>
+        <CardFooterContainer>
+          <FooterElem>Start date: {project.dateStart}</FooterElem>
+          <FooterElem>End date: {project.dateEnd}</FooterElem>
+          <FooterElem>Is completed: {project.isDone ? 'Yea' : 'Nope'}</FooterElem>
+          <FooterElem>Is expired: {project.isDone ? '1' : '2'}</FooterElem>
+        </CardFooterContainer>
       </ProjectCardContainer>
     );
   }
@@ -27,56 +30,79 @@ class ProjectCard extends React.Component {
 
 export default ProjectCard;
 
+const borderRadius = props => `
+  border-radius: 15px;
+`;
+
 const ProjectCardContainer = styled(RowContainer)`
   width: 33%;
   height: 250px;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  box-sizing: content-box;
-  border-radius: 15px;
-  background: #EAE7DC;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background: #eae7dc;
   margin: 0 0.5% 15px 0;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  ${borderRadius}
+
   &:nth-child(3n) {
     margin-right: 0;
   }
 
-  & > img {
-    width: 100%;
-    height: 100%;
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  &:hover{
+  &:hover {
     cursor: pointer;
-
-    img {
-      display: block;
-      background: #d9d3bf;
-      opacity: 0.5;
-      margin: auto;
-    }
+    border-color: #7d5f36;
   }
 `;
 
-const HeaderContainer = styled.h2`
+const baseCardPart = props => `
+  padding: 1% 5%;
+`;
+
+const underlineBorder = (border) => `
+  content: '';
   width: 100%;
-  height: 20%;
+  display: inline-block;
+  margin: 0 auto;
+  ${border}: 1px solid #e98074;
+`;
+
+const CardHeaderContainer = styled.h2`
+  height: 25%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1% 5%;
   margin: 0;
-  color: #E98074;
+  color: #e98074;
+  ${baseCardPart}
 
   &::after {
-    content: ""; 
-    margin: 0 auto; 
-    width: 99%;
-    border-bottom: 1px solid #E98074;
+    ${underlineBorder('border-bottom')}
   }
+`;
+
+const CardContentContainer = styled.div`
+  height: 50%;
+  font-size: 16px;
+  ${baseCardPart}
+`;
+
+const CardFooterContainer = styled.div`
+  height: 25%;
+  display: flex;
+  flex-wrap: wrap;
+  ${baseCardPart}
+  padding-top: 0;
+
+  &::before {
+    ${underlineBorder('border-top')}
+    padding-bottom: 1%;
+  }
+`;
+
+const FooterElem = styled.div`
+  width: 50%;
+  box-sizing: border-box;
 `;

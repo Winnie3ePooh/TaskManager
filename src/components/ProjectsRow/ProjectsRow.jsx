@@ -3,17 +3,11 @@ import styled, { keyframes } from 'styled-components';
 
 import { RowContainer } from '~/components/Containers/RowContainer';
 import ProjectCard from '~/components/ProjectCard/ProjectCard';
-import NewProjectsForm from '~/components/NewProjectsForm/NewProjectsForm';
 
 import AddLogo from '~/assets/add.svg';
 
-import db from '~/db/db';
-import { addProject } from '~/db/projects';
-
-function ProjectCards ({ projectsList }) {
-  return projectsList.map((item) =>
-      <ProjectCard key={item.id} project={item} />
-  );
+function ProjectCards({ projectsList }) {
+  return projectsList.map(item => <ProjectCard key={item.id} project={item} />);
 }
 
 class ProjectsRow extends React.Component {
@@ -21,57 +15,39 @@ class ProjectsRow extends React.Component {
     super(props);
 
     this.state = {
-      isModalOpen: false,
+      isCollapsed: false,
     };
 
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleAddNewProject = this.handleAddNewProject.bind(this);
+    this.handleCollapse = this.handleCollapse.bind(this);
   }
 
-  async componentDidMount() {
-    const userProjects = await db.table('projects').toArray();
+  handleCollapse() {
+    const isCollapsed = this.state.isCollapsed;
+
     this.setState({
-      projectsList: userProjects,
+      isCollapsed: !isCollapsed,
     });
-  }
-
-  openModal(e) {
-    this.setState({
-      isModalOpen: true,
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      isModalOpen: false,
-    })
-  }
-  
-  async handleAddNewProject(data) {
-    const id = await addProject(data);
-    const newProjectsList = [...this.state.projectsList, Object.assign({}, data, { id })];
-    this.setState({
-      projectsList: newProjectsList,
-    })
-    this.closeModal();
   }
 
   render() {
-    const projectsList = this.state.projectsList;
+    const { projectsList, projectsType, openModal } = this.props;
+    const { isCollapsed } = this.state;
+    const rowHeight = 265 * (projectsList.length + 1);
+
     return (
-      <React.Fragment>
-        <ProjectsRowContainer>
-            {projectsList && <ProjectCards projectsList={projectsList} />}
-            <NewProjectButton onClick={this.openModal}>
-              <img src={AddLogo} alt='Add'/>
-            </NewProjectButton>
-        </ProjectsRowContainer>
-        <NewProjectsForm
-          isVisible={this.state.isModalOpen}
-          closeModal={this.closeModal}
-          handleAddNewProject={this.handleAddNewProject} />
-      </React.Fragment>
+      <ProjectsRowContainer>
+        <ProjectsRowHeader onClick={this.handleCollapse}>{projectsType}</ProjectsRowHeader>
+        <ProjectsRowContent
+          className={isCollapsed ? 'active' : ''}
+          isCollapsed={isCollapsed}
+          rowHeight={rowHeight}
+        >
+          {projectsList && <ProjectCards projectsList={projectsList} />}
+          <NewProjectButton onClick={openModal}>
+            <img src={AddLogo} alt='Add' />
+          </NewProjectButton>
+        </ProjectsRowContent>
+      </ProjectsRowContainer>
     );
   }
 }
@@ -82,11 +58,32 @@ const ProjectsRowContainer = styled(RowContainer)`
   width: 95%;
   height: auto;
   flex-wrap: wrap;
-  background: #D8C3A5;
+  background: #d8c3a5;
   box-sizing: border-box;
   border-radius: 15px;
   margin: 15px auto 0px auto;
-  padding: 15px;
+`;
+
+const ProjectsRowHeader = styled(ProjectsRowContainer)`
+  width: 100%;
+  background: #eae7dc;
+  margin: 0;
+  padding: 10px;
+  box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.75);
+`;
+
+const ProjectsRowContent = styled(ProjectsRowContainer)`
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  transition: max-height 0.25s ease-out, margin 0.25s linear;
+
+  &.active {
+    max-height: ${({rowHeight}) => rowHeight + 'px'};
+    margin: 15px;
+    transition: max-height 0.25s ease-in, margin 0.25s linear;
+  }
 `;
 
 function buttonAnimation() {
@@ -107,9 +104,9 @@ const NewProjectButton = styled(RowContainer)`
   height: 250px;
   box-sizing: content-box;
   border-radius: 15px;
-  background: #EAE7DC;
+  background: #eae7dc;
   margin: 0 0.5% 15px 0;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
   &:nth-child(3n) {
     margin-right: 0;
@@ -117,8 +114,8 @@ const NewProjectButton = styled(RowContainer)`
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,0,0,0.75);
-    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+
     & > img {
       -webkit-animation: ${buttonAnimation()} 0.5s linear;
       animation: ${buttonAnimation()} 0.5s linear;
