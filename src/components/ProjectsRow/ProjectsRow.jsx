@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/core';
 
 import { RowContainer } from '~/components/Containers/RowContainer';
 import ProjectCard from '~/components/ProjectCard/ProjectCard';
@@ -80,7 +81,7 @@ const ProjectsRowContent = styled(ProjectsRowContainer)`
   transition: max-height 0.25s ease-out, margin 0.25s linear;
 
   &.active {
-    max-height: ${({rowHeight}) => rowHeight + 'px'};
+    max-height: ${({ rowHeight }) => `${rowHeight}px`};
     margin: 15px;
     transition: max-height 0.25s ease-in, margin 0.25s linear;
   }

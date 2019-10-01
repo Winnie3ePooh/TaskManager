@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import {RowContainer} from '~/components/Containers/RowContainer';
 
@@ -27,5 +27,5 @@ const NavBarContainer = styled(RowContainer)`
   width: 100%;
   height: 75px;
   margin-top: 0;
-  background: #EAE7DC;
-`
+  background: #eae7dc;
+`;

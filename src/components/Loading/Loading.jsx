@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/core';
 
 const Loading = () => {
   return (
@@ -42,7 +43,6 @@ const LoadingWrapper = styled.div`
       width: 6px;
       display: inline-block;
       margin: 2px;
-      
       -webkit-animation: ${animationBuiler()} 1.2s infinite ease-in-out;
       animation: ${animationBuiler()} 1.2s infinite ease-in-out;
     }
@@ -54,8 +54,8 @@ const LoadingWrapper = styled.div`
       }
 
       .rect3 {
-        -webkit-animation-delay: -1.0s;
-        animation-delay: -1.0s;
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
       }
 
       .rect4 {

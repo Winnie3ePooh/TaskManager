@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-import {RowContainer} from '~/components/Containers/RowContainer';
+import { RowContainer } from '~/components/Containers/RowContainer';
 
 class ProjectCard extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ const baseCardPart = props => `
   padding: 1% 5%;
 `;
 
-const underlineBorder = (border) => `
+const underlineBorder = border => `
   content: '';
   width: 100%;
   display: inline-block;
