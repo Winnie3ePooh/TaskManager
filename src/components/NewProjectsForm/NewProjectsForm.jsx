@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/core';
 
 import DatePicker from 'react-datepicker';
 import { RowContainer } from '~/components/Containers/RowContainer';
-
-import CloseLogo from '~/assets/close.svg';
 
 class NewProjectsForm extends React.Component {
   constructor(props) {
@@ -43,7 +40,7 @@ class NewProjectsForm extends React.Component {
           <NewProjectsFormContainer />
           <FormsContainer>
             <ButtonClose onClick={this.props.closeModal}>
-              <img src={CloseLogo} alt="Close" />
+              <i className="material-icons">close</i>
             </ButtonClose>
             <FormContainer ref={this.inputForm} onSubmit={this.handleSubmit}>
               <InputRow>

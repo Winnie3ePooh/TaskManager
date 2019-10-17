@@ -5,8 +5,6 @@ import { keyframes } from '@emotion/core';
 import { RowContainer } from '~/components/Containers/RowContainer';
 import ProjectCard from '~/components/ProjectCard/ProjectCard';
 
-import AddLogo from '~/assets/add.svg';
-
 function ProjectCards({ projectsList }) {
   return projectsList.map(item => <ProjectCard key={item.id} project={item} />);
 }
@@ -45,7 +43,7 @@ class ProjectsRow extends React.Component {
         >
           {projectsList && <ProjectCards projectsList={projectsList} />}
           <NewProjectButton onClick={openModal}>
-            <img src={AddLogo} alt='Add' />
+            <i className="material-icons">add</i>
           </NewProjectButton>
         </ProjectsRowContent>
       </ProjectsRowContainer>
@@ -78,12 +76,13 @@ const ProjectsRowContent = styled(ProjectsRowContainer)`
   max-height: 0;
   overflow: hidden;
   margin: 0;
-  transition: max-height 0.25s ease-out, margin 0.25s linear;
+  padding: 0;
+  transition: max-height 0.25s ease-out, padding 0.25s linear;
 
   &.active {
     max-height: ${({ rowHeight }) => `${rowHeight}px`};
-    margin: 15px;
-    transition: max-height 0.25s ease-in, margin 0.25s linear;
+    padding: 15px;
+    transition: max-height 0.25s ease-in, padding 0.25s linear;
   }
 `;
 
@@ -117,15 +116,14 @@ const NewProjectButton = styled(RowContainer)`
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 
-    & > img {
+    & > i {
       -webkit-animation: ${buttonAnimation()} 0.5s linear;
       animation: ${buttonAnimation()} 0.5s linear;
     }
   }
 
-  & > img {
-    width: 33%;
-    height: 33%;
+  & > i {
     margin: auto;
+    font-size: 75px;
   }
 `;

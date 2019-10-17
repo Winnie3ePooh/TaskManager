@@ -1,36 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
 import { RowContainer } from '~/components/Containers/RowContainer';
+import Dropdown from '../Dropdown/Dropdown';
 
-class ProjectCard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const menuItems = [
+  { id: 1, label: 'Open'},
+  { id: 2, label: 'Edit'},
+  { id: 3, label: 'Remove'},
+];
 
-  componentDidMount() {
-  }
+function ProjectCard(props) {
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const project = props.project;
+  const handleMouseLeave = () => setMenuOpen(!isMenuOpen);
 
-  render() {
-    const project = this.props.project;
-    return (
-      <ProjectCardContainer>
-        <CardHeaderContainer>{project.title}</CardHeaderContainer>
-        <CardContentContainer>{project.description}</CardContentContainer>
-        <CardFooterContainer>
-          <FooterElem>Start date: {project.dateStart}</FooterElem>
-          <FooterElem>End date: {project.dateEnd}</FooterElem>
-          <FooterElem>Is completed: {project.isDone ? 'Yea' : 'Nope'}</FooterElem>
-          <FooterElem>Is expired: {project.isDone ? '1' : '2'}</FooterElem>
-        </CardFooterContainer>
-      </ProjectCardContainer>
-    );
-  }
+  return (
+    <ProjectCardContainer>
+      <CardHeaderContainer>{project.title}</CardHeaderContainer>
+      <CardContentContainer>{project.description}</CardContentContainer>
+      <CardFooterContainer>
+        <FooterElem>Start date: {project.dateStart}</FooterElem>
+        <FooterElem>End date: {project.dateEnd}</FooterElem>
+        <FooterElem>Is completed: {project.isDone ? 'Yea' : 'Nope'}</FooterElem>
+        <FooterElem>Is expired: {project.isDone ? '1' : '2'}</FooterElem>
+      </CardFooterContainer>
+      <MenuButton onClick={() => setMenuOpen(!isMenuOpen)}>
+        <i className="material-icons">dehaze</i>
+        <Dropdown data={menuItems} isOpen={isMenuOpen} closeIt={handleMouseLeave} />
+      </MenuButton>
+    </ProjectCardContainer>
+  );
 }
 
 export default ProjectCard;
 
-const borderRadius = props => `
+const borderRadius = () => `
   border-radius: 15px;
 `;
 
@@ -57,7 +62,7 @@ const ProjectCardContainer = styled(RowContainer)`
   }
 `;
 
-const baseCardPart = props => `
+const baseCardPart = () => `
   padding: 1% 5%;
 `;
 
@@ -105,4 +110,27 @@ const CardFooterContainer = styled.div`
 const FooterElem = styled.div`
   width: 50%;
   box-sizing: border-box;
+`;
+
+const MenuButton = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
+  background: none;
+  border: none;
+  color: #8e8d8a;
+  font-size: 17px;
+  font-weight: bold;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  padding: 0;
+  transition: color 0.25s linear;
+
+  & > i:hover {
+    cursor: pointer;
+    color: #000000;
+    transition: color 0.25s linear;
+  }
 `;
