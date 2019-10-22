@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import styled from '@emotion/styled';
 
 import DatePicker from 'react-datepicker';
@@ -34,8 +35,7 @@ class NewProjectsForm extends React.Component {
 
   render() {
     const isVisible = this.props.isVisible;
-    return (
-      isVisible && (
+    return createPortal(
         <React.Fragment>
           <NewProjectsFormContainer />
           <FormsContainer>
@@ -63,7 +63,8 @@ class NewProjectsForm extends React.Component {
             </FormContainer>
           </FormsContainer>
         </React.Fragment>
-      )
+      ,
+      document.getElementById('modal')
     );
   }
 }

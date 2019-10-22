@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '~/routes/routes';
 
 import Loading from '~/components/Loading/Loading';
@@ -32,7 +32,8 @@ class MainPage extends React.Component {
           ? <Loading />
           : <MainContainer>
               <Router>
-                <NavBar></NavBar>
+                <NavBar />
+                <Switch>
                 {routes.map((route, index) => (
                   <Route
                     key={index}
@@ -41,6 +42,7 @@ class MainPage extends React.Component {
                     component={route.main}
                   />
                 ))}
+                </Switch>
               </Router>
             </MainContainer>
         }

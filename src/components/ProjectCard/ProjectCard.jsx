@@ -4,14 +4,9 @@ import styled from '@emotion/styled';
 import { RowContainer } from '~/components/Containers/RowContainer';
 import Dropdown from '../Dropdown/Dropdown';
 
-const menuItems = [
-  { id: 1, label: 'Open'},
-  { id: 2, label: 'Edit'},
-  { id: 3, label: 'Remove'},
-];
-
 function ProjectCard(props) {
   const [isMenuOpen, setMenuOpen] = useState(false);
+
   const project = props.project;
   const handleMouseLeave = () => setMenuOpen(!isMenuOpen);
 
@@ -20,14 +15,25 @@ function ProjectCard(props) {
       <CardHeaderContainer>{project.title}</CardHeaderContainer>
       <CardContentContainer>{project.description}</CardContentContainer>
       <CardFooterContainer>
-        <FooterElem>Start date: {project.dateStart}</FooterElem>
-        <FooterElem>End date: {project.dateEnd}</FooterElem>
-        <FooterElem>Is completed: {project.isDone ? 'Yea' : 'Nope'}</FooterElem>
-        <FooterElem>Is expired: {project.isDone ? '1' : '2'}</FooterElem>
+        <FooterElem>
+          Start date: <span className="neutral">{project.dateStart}</span>
+        </FooterElem>
+        <FooterElem>
+          End date: <span className="neutral">{project.dateEnd}</span>
+        </FooterElem>
+        <FooterElem isDone={project.isDone}>
+          Is completed: <span>{project.isDone ? 'Yea' : 'Nope'}</span>
+        </FooterElem>
+        <FooterElem isDone={project.isDone}>
+          Is expired: <span>{project.isDone ? '1' : '2'}</span>
+        </FooterElem>
       </CardFooterContainer>
       <MenuButton onClick={() => setMenuOpen(!isMenuOpen)}>
         <i className="material-icons">dehaze</i>
-        <Dropdown data={menuItems} isOpen={isMenuOpen} closeIt={handleMouseLeave} />
+        <Dropdown 
+          isOpen={isMenuOpen} 
+          closeIt={handleMouseLeave} 
+          pId={project.id} />
       </MenuButton>
     </ProjectCardContainer>
   );
@@ -110,6 +116,13 @@ const CardFooterContainer = styled.div`
 const FooterElem = styled.div`
   width: 50%;
   box-sizing: border-box;
+  & > span {
+    font-weight: bold;
+
+    &:not(.neutral) {
+      color: ${({ isDone }) => isDone ? 'green' : 'red'};
+    }
+  }
 `;
 
 const MenuButton = styled.div`

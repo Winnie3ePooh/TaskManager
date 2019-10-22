@@ -8,6 +8,10 @@
     ],
     "parser": "babel-eslint",
     "rules": {
+        "jsx-quotes": [
+            1,
+            "prefer-double"
+        ],
         "import/no-unresolved": "off",
         "react/jsx-filename-extension": [
             1,
@@ -22,6 +26,9 @@
                 "printWidth": 100,
                 "singleQuote": true
             }
+        ],
+        "react/forbid-prop-types": [
+            false
         ]
     },
     "plugins": ["prettier"]
