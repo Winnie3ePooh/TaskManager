@@ -3,27 +3,28 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-const menuItems = [
-  { id: 1, label: 'Open', path: '/project/'},
-  { id: 2, label: 'Edit', path: '/project/edit/'},
-  { id: 3, label: 'Remove', path: '/project/remove/'},
-];
-
-const Dropdown = ({ isOpen, closeIt, pId }) => {
+const Dropdown = ({ isOpen, close, remove, pId }) => {
 	return (
 		<DropdownMenu
-		className={isOpen ? 'active' : ''}
-		itemCount={menuItems.length}
-		onMouseOut={closeIt}
+			className={isOpen ? 'active' : ''}
+			onMouseOut={close}
 			onBlur={() => void 0}
 			>
-			{menuItems.map(item => (
-				<MenuItem 
-					key={item.id}
-					to={item.path + pId}>
-					{item.label}
-				</MenuItem>
-				))}
+			<MenuItem 
+				to={'/project/' + pId}
+			>
+				Open
+			</MenuItem>
+			<MenuItem 
+				onClick={() => console.log('uaua')}
+			>
+				Edit
+			</MenuItem>
+			<MenuItem 
+				onClick={remove}
+			>
+				Remove
+			</MenuItem>
 		</DropdownMenu>
 	);
 };

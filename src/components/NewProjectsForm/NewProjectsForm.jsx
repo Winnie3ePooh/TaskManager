@@ -1,73 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, createRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled from '@emotion/styled';
 
 import DatePicker from 'react-datepicker';
 import { RowContainer } from '~/components/Containers/RowContainer';
 
-class NewProjectsForm extends React.Component {
-  constructor(props) {
-    super(props);
+const NewProjectsForm = (props) => {
+  const [startDate, setStarDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
-    this.state = {
-      startDate: new Date(),
-    };
+  const inputForm = createRef();
 
-    this.inputForm = React.createRef();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {}
-
-  handleSubmit(e) {
+  const handleSubmit = e => {
     e.preventDefault();
 
     const newProject = {
-      title: this.inputForm.current[0].value,
-      description: this.inputForm.current[1].value,
-      dateStart: this.inputForm.current[2].value,
-      dateEnd: this.inputForm.current[3].value,
+      title: inputForm.current[0].value,
+      description: inputForm.current[1].value,
+      dateStart: inputForm.current[2].value,
+      dateEnd: inputForm.current[3].value,
       isDone: false,
     };
 
-    this.props.handleAddNewProject(newProject);
+    props.handleAddNewProject(newProject);
   }
 
-  render() {
-    const isVisible = this.props.isVisible;
-    return createPortal(
-        <React.Fragment>
-          <NewProjectsFormContainer />
-          <FormsContainer>
-            <ButtonClose onClick={this.props.closeModal}>
-              <i className="material-icons">close</i>
-            </ButtonClose>
-            <FormContainer ref={this.inputForm} onSubmit={this.handleSubmit}>
-              <InputRow>
-                <label htmlFor="pName">Project name</label>
-                <input id="pName" type="text"></input>
-              </InputRow>
-              <InputRow>
-                <label htmlFor="pDescr">Project description</label>
-                <textarea id="pDescr" cols="40" rows="10"></textarea>
-              </InputRow>
-              <InputRow type="inline">
-                <label htmlFor="pDescr">Start date</label>
-                <StyledDatePicker selected={this.state.startDate} onChange={this.handleChange} />
-              </InputRow>
-              <InputRow type="inline">
-                <label htmlFor="pDescr">End date</label>
-                <StyledDatePicker selected={this.state.startDate} onChange={this.handleChange} />
-              </InputRow>
-              <SubmitButton type="submit">Add</SubmitButton>
-            </FormContainer>
-          </FormsContainer>
-        </React.Fragment>
-      ,
-      document.getElementById('modal')
+  if(!props.isVisible) {
+    return null
+  };
+
+  return createPortal(
+      <React.Fragment>
+        <NewProjectsFormContainer />
+        <FormsContainer>
+          <ButtonClose onClick={props.closeModal}>
+            <i className="material-icons">close</i>
+          </ButtonClose>
+          <FormContainer ref={inputForm} onSubmit={handleSubmit}>
+            <InputRow>
+              <label htmlFor="pName">Project name</label>
+              <input id="pName" type="text"></input>
+            </InputRow>
+            <InputRow>
+              <label htmlFor="pDescr">Project description</label>
+              <textarea id="pDescr" cols="40" rows="10"></textarea>
+            </InputRow>
+            <InputRow type="inline">
+              <label htmlFor="pDescr">Start date</label>
+              <StyledDatePicker 
+                selected={startDate} 
+                onChange={date => setStarDate(date)} 
+                dateFormat="dd/mm/yyyy"/>
+            </InputRow>
+            <InputRow type="inline">
+              <label htmlFor="pDescr">End date</label>
+              <StyledDatePicker 
+                selected={endDate} 
+                onChange={date => setEndDate(date)} 
+                dateFormat="dd/mm/yyyy" />
+            </InputRow>
+            <SubmitButton type="submit">Add</SubmitButton>
+          </FormContainer>
+        </FormsContainer>
+      </React.Fragment>
+        ,
+        document.getElementById('modal')
     );
-  }
-}
+};
 
 export default NewProjectsForm;
 

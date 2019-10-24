@@ -7,7 +7,7 @@ import NewProjectsForm from '~/components/NewProjectsForm/NewProjectsForm';
 import { MainContainer } from '~/components/Containers/MainContainer';
 
 import db from '~/db/db';
-import { addProject } from '~/db/projects';
+import { addProject, removeProject } from '~/db/projects';
 
 class ProjectsPage extends React.Component {
   constructor() {
@@ -21,6 +21,7 @@ class ProjectsPage extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleAddNewProject = this.handleAddNewProject.bind(this);
+    this.handleRemoveProject = this.handleRemoveProject.bind(this);
   }
 
   async componentDidMount() {
@@ -38,6 +39,20 @@ class ProjectsPage extends React.Component {
     });
     this.closeModal();
   }
+
+  async handleRemoveProject(id) {
+    const success = await removeProject(id);
+    if (success) {
+      const userProjects = await db.table('projects').toArray();
+      this.setState({
+        projectsList: userProjects,
+      });
+    }
+	}
+
+	async handleEditProject(id) {
+		console.log(id);
+	}
 
   openModal() {
     this.setState({
@@ -59,6 +74,7 @@ class ProjectsPage extends React.Component {
           projectsList={projectsList}
           projectsType='Personal'
           openModal={this.openModal}
+          removeProject={this.handleRemoveProject}
         />
         <NewProjectsForm
           isVisible={this.state.isModalOpen}

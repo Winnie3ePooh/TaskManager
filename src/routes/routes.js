@@ -16,6 +16,12 @@ const routes = [
     path: "/project/new",
     main: () => <NewProjectsForm></NewProjectsForm>
   },
+  { 
+    id: 2,
+    text: "Current Project",
+    path: "/project/:id",
+    main: () => <h1>Alive</h1>
+  },
 ];
 
 export default routes;

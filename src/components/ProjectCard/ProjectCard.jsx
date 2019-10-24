@@ -8,6 +8,7 @@ function ProjectCard(props) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const project = props.project;
+
   const handleMouseLeave = () => setMenuOpen(!isMenuOpen);
 
   return (
@@ -32,7 +33,8 @@ function ProjectCard(props) {
         <i className="material-icons">dehaze</i>
         <Dropdown 
           isOpen={isMenuOpen} 
-          closeIt={handleMouseLeave} 
+          close={handleMouseLeave} 
+          remove={() => props.remove(project.id)}
           pId={project.id} />
       </MenuButton>
     </ProjectCardContainer>

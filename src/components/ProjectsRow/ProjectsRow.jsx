@@ -1,56 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 
 import { RowContainer } from '~/components/Containers/RowContainer';
 import ProjectCard from '~/components/ProjectCard/ProjectCard';
 
-function ProjectCards({ projectsList }) {
-	return projectsList.map(item => <ProjectCard key={item.id} project={item} />);
-}
+const ProjectsRow = (props) => {
+	const [isCollapsed, setIsCollapsed] = useState(false);
 
-class ProjectsRow extends React.Component {
-	constructor(props) {
-		super(props);
+	const handleCollapse = () => {
+		setIsCollapsed(!isCollapsed);
+	};
 
-		this.state = {
-			isCollapsed: false,
-		};
-
-		this.handleCollapse = this.handleCollapse.bind(this);
-	}
-
-	handleCollapse() {
-		const { isCollapsed } = this.state;
-
-		this.setState({
-			isCollapsed: !isCollapsed,
+	const ProjectCards = ({ projectsList }) => {
+		return projectsList.map(item => {
+			return (
+			<ProjectCard 
+				key={item.id} 
+				project={item}
+				remove={props.removeProject}
+			/>)
 		});
 	}
 
-	render() {
-		const { projectsList, projectsType, openModal } = this.props;
-		const { isCollapsed } = this.state;
-		const rowHeight = 265 * (projectsList.length + 1);
+	const { projectsList, projectsType, openModal } = props;
+	const rowHeight = 265 * (projectsList.length + 1);
 
-		return (
-			<ProjectsRowContainer>
-				<ProjectsRowHeader onClick={this.handleCollapse}>
-					{projectsType}
-				</ProjectsRowHeader>
-				<ProjectsRowContent
-					className={isCollapsed ? 'active' : ''}
-					isCollapsed={isCollapsed}
-					rowHeight={rowHeight}
-				>
-					{projectsList && <ProjectCards projectsList={projectsList} />}
-					<NewProjectButton onClick={openModal}>
-						<i className="material-icons">add</i>
-					</NewProjectButton>
-				</ProjectsRowContent>
-			</ProjectsRowContainer>
-		);
-	}
+	return (
+		<ProjectsRowContainer>
+			<ProjectsRowHeader onClick={handleCollapse}>
+				{projectsType}
+			</ProjectsRowHeader>
+			<ProjectsRowContent
+				className={isCollapsed ? 'active' : ''}
+				isCollapsed={isCollapsed}
+				rowHeight={rowHeight}
+			>
+				{projectsList && <ProjectCards projectsList={projectsList} />}
+				<NewProjectButton onClick={openModal}>
+					<i className="material-icons">add</i>
+				</NewProjectButton>
+			</ProjectsRowContent>
+		</ProjectsRowContainer>
+	);
 }
 
 export default ProjectsRow;
